@@ -18,7 +18,7 @@ router.post('/register', async(req, res) => {
         await user.save()
         res.status(201).send(user)
     } catch (error) {
-        res.status(400).send(error.message)
+        res.status(401).send(error.message)
     }
 })
 
@@ -26,7 +26,7 @@ router.post('/login', async(req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if(err) throw err
       if(!user) {
-          res.send("user not found")
+          res.send("Invalid credentials")
       }else {
           req.logIn(user, err, () => {
               if(err) throw err
